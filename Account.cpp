@@ -1,7 +1,7 @@
 #include "Account.h"
 void Account::input()
 {
-	cout << "input account information:" << endl;
+	cout << "Please input account information:" << endl;
 	cout << "- indentity card number: ";
 	cin >> idcn;
 	cout << "- name: ";
