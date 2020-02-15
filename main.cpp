@@ -1,52 +1,12 @@
 #include "Account.h"
 #include<stdlib.h>
 
-int main()
-{
-	Account accountList[1000];
-	int numOfList;
-	while (true)
-	{
-		int choose;
-		cout << "**********CUSTOMER ACCOUNT BANKING MANAGEMENT SYSTEM**********" << endl;
-		cout << "******************WELCOME TO THE MAIN MENU********************" << endl;
-		cout << "1.Create new account";
-		cout << "\n2.Update information of existing account";
-		cout << "\n3.For transactions";
-		cout << "\n4.Check the details of existing account";
-		cout << "\n5.Removing existing account";
-		cout << "\n6.View customer's list";
-		cout << "\n7.Exit";
-		cout << "\n\n\n\n\nEnter your choice: ";
-		cin >> choose;
-		switch (choose)
-		{
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7: exit(0);
-			break;
-		default: cout << "PLEASE CHOOSE AGAIN!!!";
-			break;
-		}
-	}
-	system("pause");
-	return 0;
-}
+
 
 
 void createNewAccount(Account listAcc[], int& totalAcc)
 {
-	int flagChk;
+	int flagChk = 1;
 	while (flagChk == 1)
 	{
 		system("cls");
@@ -75,7 +35,7 @@ void createNewAccount(Account listAcc[], int& totalAcc)
 			else
 			{
 				flagChk = 0;
-				repeat = 0;
+				repeat = 1;
 			}
 		} while (repeat == 1);
 	}
@@ -83,14 +43,14 @@ void createNewAccount(Account listAcc[], int& totalAcc)
 
 int findBankNumber(Account accountList[], int numOfList, string bankNumber)
 {
-	for (int i; i < numOfList; i++)
+	for (int i = 0; i <= numOfList; i++)
 	{
 		if (accountList[i].getBankNumber() == bankNumber)
 		{
 			return i;
 		}
-		return -1; //not exists
 	}
+	return -1; //not exist
 }
 
 void transfers(Account listAcc[], int totalAcc, int pos)
@@ -126,7 +86,6 @@ void transfers(Account listAcc[], int totalAcc, int pos)
 			listAcc[desPos].setMoney(listAcc[desPos].getMoney() + transMoney);
 			//complete
 			cout << "Complete!" << endl;
-			cout << "Enter any key to continue..." << endl;
 			system("pause");
 		}
 	}
@@ -140,7 +99,6 @@ void deposit(Account listAcc[], int pos)
 	if (depositMoney <= 0)
 	{
 		cout << "ERROR: Your money do not enough to execute this action!" << endl;
-		cout << "Enter any key to continue..." << endl;
 		system("pause");
 	}
 	else
@@ -148,7 +106,6 @@ void deposit(Account listAcc[], int pos)
 		//update money for account send money
 		listAcc[pos].setMoney(listAcc[pos].getMoney() + depositMoney);
 		cout << "Complete!" << endl;
-		cout << "Enter any key to continue..." << endl;
 		system("pause");
 	}
 }
@@ -161,15 +118,13 @@ void withdraw(Account listAcc[], int pos)
 	if (withdrawMoney > listAcc[pos].getMoney())
 	{
 		cout << "ERROR: Your money do not enough to execute this action!" << endl;
-		cout << "Enter any key to continue..." << endl;
 		system("pause");
 	}
 	else
 	{
 		//update money for account send money
-		listAcc[pos].setMoney(listAcc[pos].getMoney() + withdrawMoney);
+		listAcc[pos].setMoney(listAcc[pos].getMoney() - withdrawMoney);
 		cout << "Complete!" << endl;
-		cout << "Enter any key to continue..." << endl;
 		system("pause");
 	}
 }
@@ -190,8 +145,7 @@ void transact(Account listAcc[], int& totalAcc)
 			cout << "---------- TRANSACT ---------" << endl;
 			string bankNumber;
 			// input the bank number
-			cout << "Please input your bankNumber: ";
-			fflush(stdin);
+			cout << "Please input your bank number: ";
 			cin.ignore();
 			getline(cin, bankNumber);
 			// find the input
@@ -199,11 +153,12 @@ void transact(Account listAcc[], int& totalAcc)
 			if (pos == -1)
 			{
 				cout << "ERROR: Not found this bank number!" << endl;
+				system("pause");
 				repeatFunc = 1;
 			}
 			else
 			{
-				int repeatExe = 0;
+				int repeatExe = 1;
 				while (repeatExe == 1)
 				{
 					system("cls");
@@ -255,33 +210,67 @@ void transact(Account listAcc[], int& totalAcc)
 	}
 }
 
-void remove(Account listAcc[], int& totalAcc)
+int FindID(Account accountList[], int numOfList, string ID)
 {
-	cout << "**********CUSTOMER ACCOUNT BANKING MANAGEMENT SYSTEM**********" << endl;
-	cout << "Please input your identity card number: ";
-	string id;
-	fflush(stdin);
-	cin.ignore();
-	getline(cin, id);
-}
-
-
-int FindID(Account accountList[], int numOfList,string ID)
-{
-	for (int i; i < numOfList; i++)
+	for (int i=0; i <= numOfList; i++)
 	{
 		if (accountList[i].getIdcn() == ID)
 		{
 			return i;
 		}
-		return -1; //no detail
+	}
+	return -1;
+}
+
+void remove(Account listAcc[], int& totalAcc)
+{
+	cout << "--------- REMOVE ACCOUNT ---------" << endl;
+	if (totalAcc < 0)
+	{
+		cout << "Not account to remove." << endl;
+		cout << "Enter any key to continue..." << endl;
+		system("pause");
+	}
+	else
+	{
+		cout << "Please input the identity card number need to removed: ";
+		string id;
+		fflush(stdin);
+		cin.ignore();
+		getline(cin, id);
+		int findRespone = FindID(listAcc, totalAcc, id);
+		if (findRespone == -1)
+		{
+			cout << "Not found this account. Please check again!" << endl;
+			cout << "Enter any key to continue..." << endl;
+			system("pause");
+		}
+		else
+		{
+			//delete tail
+			if (findRespone == totalAcc)
+			{
+				totalAcc--;
+			}
+			else
+			{
+				for (int i = findRespone; i <= totalAcc; i++)
+				{
+					listAcc[i] = listAcc[i + 1];
+				}
+				totalAcc--; //update total account
+			}
+			cout << "Remove complete!" << endl;
+			cout << "Enter any key to continue..." << endl;
+			system("pause");
+		}
 	}
 }
 
-void updateAccount(Account accountList[], int &numOfList)
+void updateAccount(Account accountList[], int& numOfList)
 {
 	cout << "*****Update information account*****" << endl;
-	if (numOfList == 0)
+	if (numOfList == -1)
 	{
 		cout << "No account! Plese insert Account" << endl;
 		return; //no account
@@ -306,9 +295,11 @@ void updateAccount(Account accountList[], int &numOfList)
 		int updateInformation;
 		cout << "Your choose want to update: ";
 		cin >> updateInformation;
+		cout << "DEBUG - cin " << updateInformation << endl;
 		if (updateInformation == 1)
 		{
 			string temp;
+			cout << "Input: ";
 			cin.ignore();
 			cin >> temp;
 			accountList[pos].setIdcn(temp);
@@ -316,41 +307,122 @@ void updateAccount(Account accountList[], int &numOfList)
 		if (updateInformation == 2)
 		{
 			string temp;
+			cout << "Input: ";
 			cin.ignore();
-			getline(cin, temp);
+			getline(cin, temp);	
 			accountList[pos].setName(temp);
 		}
 		if (updateInformation == 3)
 		{
 			Birthday temp;
-			temp.input;
+			temp.input();
 			accountList[pos].setBirthday(temp);
 		}
 		if (updateInformation == 4)
 		{
 			string temp;
-			cin >> temp;
+			cout << "Input: ";
+			cin.ignore();
+			getline(cin, temp);
 			accountList[pos].setPhone(temp);
 		}
 		if (updateInformation == 5)
 		{
 			string temp;
+			cout << "Input: ";
 			cin.ignore();
 			getline(cin, temp);
-			cin >> temp;
 			accountList[pos].setAddress(temp);
 		}
 		if (updateInformation == 6)
 		{
 			string temp;
-			cin >> temp;
+			cout << "Input: ";
+			cin.ignore();
+			getline(cin, temp);
 			accountList[pos].setBankNumber(temp);
 		}
 		if (updateInformation == 7)
 		{
 			double temp;
+			cout << "Input: ";
 			cin >> temp;
 			accountList[pos].setMoney(temp);
 		}
 	}
+}
+
+
+void checkAccount(Account accountList[], int numOfList)
+{
+	cout << "Input ID of account want to check: ";
+	string idCheck;
+	cin.ignore();
+	getline(cin, idCheck);
+	int pos = FindID(accountList, numOfList, idCheck);
+	if (pos == -1) {
+		cout << "Not Found Detail!!!" << endl;
+	}
+	else{
+		for (int i = 0; i <= numOfList; i++)
+		{
+			if (idCheck == accountList[i].getIdcn())
+			{
+				accountList[pos].output();
+			}
+
+		}
+	}
+}
+
+
+void viewList(Account accountList[], int numOfList)
+{
+	for (int i = 0; i <= numOfList; i++)
+	{
+		cout << i+1 << ". ";
+		cout << accountList[i].getName() << " - " << accountList[i].getIdcn() << " - " << accountList[i].getBankNumber() << endl;
+	}
+}
+
+int main()
+{
+	Account accountList[1000];
+	int numOfList = -1; // list empty
+	while (true)
+	{
+		int choose;
+		cout << "**********CUSTOMER ACCOUNT BANKING MANAGEMENT SYSTEM**********" << endl;
+		cout << "******************WELCOME TO THE MAIN MENU********************" << endl;
+		cout << "1.Create new account";
+		cout << "\n2.Update information of existing account";
+		cout << "\n3.For transactions";
+		cout << "\n4.Check the details of existing account";
+		cout << "\n5.Removing existing account";
+		cout << "\n6.View customer's list";
+		cout << "\n7.Exit";
+		cout << "\n\n\n\n\nEnter your choice: ";
+		cin >> choose;
+		switch (choose)
+		{
+		case 1: createNewAccount(accountList, numOfList);
+			break;
+		case 2:	updateAccount(accountList, numOfList);
+			break;
+		case 3:	transact(accountList, numOfList);
+			break;
+		case 4: checkAccount(accountList, numOfList);
+			break;
+		case 5: remove(accountList, numOfList);
+			break;
+		case 6: viewList(accountList, numOfList);
+			break;
+		case 7: exit(0);
+			break;
+		default: cout << "PLEASE CHOOSE AGAIN!!!";
+			break;
+		}
+	}
+	system("pause");
+	return 0;
 }

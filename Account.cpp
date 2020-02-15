@@ -1,11 +1,12 @@
 #include "Account.h"
 void Account::input()
 {
+	fflush(stdin);
 	cout << "Please input account information:" << endl;
 	cout << "- indentity card number: ";
-	cin >> idcn;
-	cout << "- name: ";
 	cin.ignore();
+	getline(cin, idcn);
+	cout << "- name: ";
 	getline(cin, name);
 	cout << "- birthday: ";
 	birthday.input();
@@ -13,10 +14,8 @@ void Account::input()
 	cin.ignore();
 	getline(cin, phone);
 	cout << "- address: ";
-	cin.ignore();
 	getline(cin, address);
 	cout << "- bank number: ";
-	cin.ignore();
 	getline(cin, bankNumber);
 	cout << "- money: ";
 	cin >> money;

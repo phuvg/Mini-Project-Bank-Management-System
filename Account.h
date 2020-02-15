@@ -4,7 +4,7 @@
 class Account
 {
 private:
-	string idcn; // indentity card number
+	string idcn; // indentify card number
 	string name;
 	Birthday birthday;
 	string phone;
