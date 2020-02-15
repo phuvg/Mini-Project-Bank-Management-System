@@ -1,5 +1,5 @@
 #include "Account.h"
-void Account::import()
+void Account::input()
 {
 	cout << "input account information:" << endl;
 	cout << "- indentity card number: ";
@@ -8,7 +8,7 @@ void Account::import()
 	cin.ignore();
 	getline(cin, name);
 	cout << "- birthday: ";
-	birthday.import();
+	birthday.input();
 	cout << "- phone: ";
 	cin.ignore();
 	getline(cin, phone);
@@ -22,13 +22,13 @@ void Account::import()
 	cin >> money;
 }
 
-void Account::export()
+void Account::output()
 {
 	cout << "Account information:" << endl;
 	cout << "- Indentity card number: " << idcn << endl;
 	cout << "- Name: " << name << endl;
 	cout << "- Birthday: ";
-	birthday.export();
+	birthday.output();
 	cout << endl;
 	cout << "- Phone: " << phone << endl;
 	cout << "- Address: " << address << endl;

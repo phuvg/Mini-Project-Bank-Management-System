@@ -12,8 +12,8 @@ private:
 	string bankNumber;
 	double money;
 public:
-	void import();
-	void export();
+	void input();
+	void output();
 	string getIdcn();
 	string getName();
 	Birthday getBirthday();

@@ -1,5 +1,5 @@
 #include "Birthday.h"
-void Birthday::import()
+void Birthday::input()
 {
 	cout << "\tday:";
 	cin >> day;
@@ -8,7 +8,7 @@ void Birthday::import()
 	cout << "\tyear: ";
 	cin >> year;
 }
-void Birthday::export()
+void Birthday::output()
 {
 	cout << day << "/" << month << "/" << year;
 }

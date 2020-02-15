@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 using namespace std;
 class Birthday
 {
@@ -8,8 +8,8 @@ private:
 	int month;
 	int year;
 public:
-	void import();
-	void export();
+	void input();
+	void output();
 	int getDay();
 	int getMonth();
 	int getYear();
